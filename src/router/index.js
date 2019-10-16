@@ -8,6 +8,7 @@ import PersonalCenter from '@/components/personal/PersonalCenter.vue'
 import Jotter from '@/components/jotter/jotter.vue'
 import Login1st from '@/components/1st/login-1st'
 import VersionControlPage from '@/components/VersionControlPage'
+import HomePage2st from '../components/2st/HomePage.vue'
 
 Vue.use(Router)
 
@@ -27,6 +28,14 @@ export default new Router({
       path: '/login2st',
       name: 'login2st',
       component: login2st
+    },
+    {
+      path: '/HomePage2st',
+      name: 'HomePage2st',
+      component: HomePage2st,
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/Home',
