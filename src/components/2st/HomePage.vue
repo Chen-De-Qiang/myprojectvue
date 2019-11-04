@@ -157,32 +157,45 @@
   <div>
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <el-form label-position="left" label-width="80px" :model="User">
-        <el-form-item label="姓名:">
-          <el-input :disabled="disabled" v-model="User.userName"></el-input>
+        <el-form-item  label="姓名:">
+          <el-input clearable :disabled="disabled" v-model="User.userName"></el-input>
         </el-form-item>
         <el-form-item label="年龄:">
-          <el-input :disabled="disabled" v-model="User.age"></el-input>
+          <el-input clearable :disabled="disabled" v-model="User.age"></el-input>
         </el-form-item>
         <el-form-item label="生日:">
-          <el-input :disabled="disabled" v-model="User.birthday"></el-input>
+          <el-input clearable :disabled="disabled" v-model="User.birthday"></el-input>
         </el-form-item>
         <el-form-item label="学院:">
-          <el-input :disabled="disabled" v-model="User.department"></el-input>
+          <el-select :disabled="disabled" style="width: 100%" clearable v-model="User.department" placeholder="请选择学院">
+            <el-option label="理学院" value="理学院"></el-option>
+            <el-option label="软件工程" value="软件工程"></el-option>
+            <el-option label="人工智能学院" value="人工智能学院"></el-option>
+            <el-option label="会计" value="会计"></el-option>
+            <el-option label="计算机" value="计算机"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="密码:">
         <el-input :disabled="disabled" v-model="User.passWord"></el-input>
       </el-form-item>
         <el-form-item label="专业:">
-          <el-input :disabled="disabled" v-model="User.professional"></el-input>
+          <el-select :disabled="disabled" style="width: 100%" clearable v-model="User.professional" placeholder="请选择专业">
+            <el-option label="记账" value="记账"></el-option>
+            <el-option label="软件工程" value="软件工程"></el-option>
+            <el-option label="计算机" value="计算机"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="性别:">
-        <el-input :disabled="disabled" v-model="User.sex"></el-input>
+          <el-select :disabled="disabled" style="width: 100%" clearable v-model="User.sex" placeholder="请选择性别">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
+          </el-select>
       </el-form-item>
         <el-form-item label="班级:">
-          <el-input :disabled="disabled" v-model="User.userClass"></el-input>
+          <el-input clearable :disabled="disabled" v-model="User.userClass"></el-input>
         </el-form-item>
         <el-form-item label="学号:">
-        <el-input :disabled="disabled" v-model="User.userNum"></el-input>
+        <el-input clearable :disabled="disabled" v-model="User.userNum"></el-input>
       </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -325,7 +338,7 @@
 
         //新增
         handleAdd() {
-          this.title='编辑学生信息';
+          this.title='新增学生信息';
           this.dialogFormVisible=true;
           this.submitType="add"
         },
