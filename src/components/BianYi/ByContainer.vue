@@ -11,62 +11,20 @@
         <el-button type="success">查看</el-button>
         <el-button type="info">帮助</el-button>
       </el-row>
+      <el-button :plain="true" @click="openNotify">成功</el-button>
     </el-header>
     <el-container style="height: 640px">
       <el-main >
         <by ref="procedureEdit"></by>
       </el-main>
       <el-aside  width="665px">
-          <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
-            <el-table
-              :data="tableData"
-              height="320"
-              border
-              style="width: 100%">
-              <el-table-column
-                type="index"
-                width="100"
-                label="序号"
-                :index="indexMethod">
-              </el-table-column>
-              <el-table-column
-                prop="name"
-                label="类型名称"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="address"
-                label="符号">
-              </el-table-column>
-            </el-table>
-          </div>
         <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
-          <el-table
-            :data="tableData2"
-            height="320"
-            border
-            style="width: 100%">
-            <el-table-column
-              type="index"
-              width="100"
-              label="序号"
-              :index="indexMethod">
-            </el-table-column>
-            <el-table-column
-              prop="kind"
-              label="分析类型"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="name"
-              label="运行结果"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="address"
-              label="原因分析">
-            </el-table-column>
-          </el-table>
+          <template v-if="GrammarTable">
+            <GrammarTable></GrammarTable>
+          </template>
+        </div>
+        <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
+          <resultTable></resultTable>
         </div>
       </el-aside>
     </el-container>
@@ -74,74 +32,26 @@
 </template>
 
 <script>
+    import GrammarTable from '../BianYi/grammar/GrammarTable.vue'
+    import lexical from '../BianYi/grammar/lexical.vue'
     import by from '../BianYi/bianyiyuanli'
-    // import NavMenu from "../common/NavMenu";
+    import resultTable from '../BianYi/resultTable'
     export default {
-        name: "ByContainer",
+      name: "ByContainer",
       data() {
         return {
+          //语法编译器
+          GrammarTable:true,
+          //词法编译器
+          lexical:true,
           textarea: '',
           count: 0,
-          tableData2: [{
-            name: '语法正确',
-            address: '无',
-            kind:'算术表达式分析'
-          }],
-          tableData: [{
-            name: '左括号',
-            address: '('
-          }, {
-            name: '标识符',
-            address: 'a'
-          }, {
-            name: '运算符',
-            address: '+'
-          }, {
-            name: '左括号',
-            address: '（'
-          }, {
-            name: '标识符',
-            address: 'b'
-          }, {
-            name: '运算符',
-            address: '+'
-          }, {
-            name: '无符号整数',
-            address: '123'
-          }, {
-            name: '运算符',
-            address: '*'
-          }, {
-            name: '标识符',
-            address: 'b'
-          }, {
-            name: '右括号',
-            address: '）'
-          }, {
-            name: '右括号',
-            address: '）'
-          }, {
-            name: '运算符',
-            address: '+'
-          }, {
-            name: '无符号整数',
-            address: '123'
-          }, {
-            name: '运算符',
-            address: '*'
-          }, {
-            name: '标识符',
-            address: 'b'
-          }, {
-            name: '结束符号',
-            address: '；'
-          }],
           Lexical: {
             contentText: ''
           }
         }
       },
-      components: {by},
+      components: {by,GrammarTable,lexical,resultTable},
       methods: {
         load () {
           this.count += 2
@@ -154,10 +64,19 @@
           console.log(JSON.stringify(k));
           this.$axios.post('/Lexical',JSON.stringify(k)).then(res => {
             if (res.data.code === 200) {
-
+              console.log(res.data.data);
+              this.$notify({
+                title: '成功',
+                message: '词法分析成功',
+                type: 'success'
+              });
             }
           }).catch(failResponse => {
-
+            this.$notify.error({
+              title: '错误',
+              message: '词法分析失败',
+              type:'danger'
+            });
           })
         }
       }
