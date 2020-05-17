@@ -7,6 +7,8 @@
     <button @click="toPage('HomePage2st')">作业2+element_ui</button>
     <br/>
     <button @click="toPage('login2st')">图书管理系统</button>
+    <br/>
+    <button @click="toPage('ByContainer')">编译原理</button>
   </div>
 </template>
 

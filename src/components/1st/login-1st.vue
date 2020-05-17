@@ -11,6 +11,12 @@
             <li><button style="width: 90px;height: 35px" v-on:click="AddDataList">新增</button></li>
             <li><button style="width: 90px;height: 35px" >按id排序</button></li>
             <li><button style="width: 90px;height: 35px" >按年龄排序</button></li>
+            <li>
+              <form style="padding: 20px" action="http://localhost:8088/upload3" method="post" enctype="multipart/form-data">
+                <input type="file" name="uploadFile" value="请选择文件"></input>
+                <input type="submit" value="上传"></input>
+              </form>
+            </li>
           </ul>
         </div>
         <table>
@@ -66,6 +72,7 @@
 
 <script>
     import Popup from './tools/Popup.vue'
+    import Form from "../2st/dialogForm";
     export default {
       name: "login-1st",
       data: function () {
@@ -90,6 +97,7 @@
         }
       },
       components:{
+        Form,
         Popup
       },
       mounted:function(){

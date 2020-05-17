@@ -9,6 +9,8 @@ import Jotter from '@/components/jotter/jotter.vue'
 import Login1st from '@/components/1st/login-1st'
 import VersionControlPage from '@/components/VersionControlPage'
 import HomePage2st from '../components/2st/HomePage.vue'
+import bianyiyuanli from '../components/BianYi/bianyiyuanli.vue'
+import ByContainer from '../components/BianYi/ByContainer.vue'
 
 Vue.use(Router)
 
@@ -33,6 +35,22 @@ export default new Router({
       path: '/HomePage2st',
       name: 'HomePage2st',
       component: HomePage2st,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/bianyiyuanli',
+      name: 'bianyiyuanli',
+      component: bianyiyuanli,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/ByContainer',
+      name: 'ByContainer',
+      component: ByContainer,
       meta: {
         requireAuth: true
       }
