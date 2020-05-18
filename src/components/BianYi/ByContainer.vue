@@ -18,8 +18,8 @@
       </el-main>
       <el-aside  width="665px">
         <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
-          <template v-if="grammarTable">
-            <GrammarTable :tableData="grammarTableData"></GrammarTable>
+          <template v-if="lexicalTable">
+            <lexical :tableData="lexicalTableData"></lexical>
           </template>
         </div>
         <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
@@ -39,9 +39,14 @@
       name: "ByContainer",
       data() {
         return {
+          // 词法分析
+          lexicalTableData:[],
+          //语法分析
           grammarTableData:[],
           //语法编译器
           grammarTable:true,
+          //词法分析
+          lexicalTable:true,
           resultTableData:[],
           resultTableDataJson:{
             analysisType: '',
@@ -71,9 +76,9 @@
               //分析结果
               this.resultTableDataJson.analysisResult="正确";
               this.resultTableData.push(this.resultTableDataJson);
-
-              this.grammarTableData=res.data.data;
-              console.log(this.grammarTableData);
+              //数据分析
+              this.lexicalTableData=res.data.data;
+              console.log(this.lexicalTableData);
               this.$notify({
                 title: '成功',
                 message: '词法分析成功',
