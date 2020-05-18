@@ -19,7 +19,7 @@
       <el-aside  width="665px">
         <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
           <template v-if="grammarTable">
-            <GrammarTable></GrammarTable>
+            <GrammarTable :tableData="grammarTableData"></GrammarTable>
           </template>
         </div>
         <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
