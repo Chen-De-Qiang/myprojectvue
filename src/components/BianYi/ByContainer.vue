@@ -23,7 +23,7 @@
           </template>
         </div>
         <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
-          <resultTable></resultTable>
+          <resultTable :tableData="resultTableData"></resultTable>
         </div>
       </el-aside>
     </el-container>
@@ -42,9 +42,14 @@
           grammarTableData:[],
           //语法编译器
           grammarTable:true,
+          resultTableData:[],
+          resultTableDataJson:{
+            analysisType: '',
+            analysisResult: '',
+            analysisReason: ''
+          },
           //词法编译器
           lexical:true,
-
           Lexical: {
             contentText: ''
           }
@@ -53,12 +58,20 @@
       components: {by,GrammarTable,lexical,resultTable},
       methods: {
         handleEdit () {
-          var k=this.$refs['procedureEdit'].getVal();
-          console.log(JSON.stringify(k));
-          this.$axios.post('/Lexical',JSON.stringify(k)).then(res => {
+          let lexicalStr=this.$refs['procedureEdit'].getVal();
+          console.log(JSON.stringify(lexicalStr));
+          this.$axios.post('/Lexical',JSON.stringify(lexicalStr)).then(res => {
             if (res.data.code === 200) {
               //将值赋给词法分析器
               this.GrammarTable=true;
+              //分析类型
+              this.resultTableDataJson.analysisType="语法分析";
+              //分析原因
+              this.resultTableDataJson.analysisReason="无";
+              //分析结果
+              this.resultTableDataJson.analysisResult="正确";
+              this.resultTableData.push(this.resultTableDataJson);
+
               this.grammarTableData=res.data.data;
               console.log(this.grammarTableData);
               this.$notify({

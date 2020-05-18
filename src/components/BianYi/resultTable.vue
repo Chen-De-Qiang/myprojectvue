@@ -11,17 +11,17 @@
       :index="indexMethod">
     </el-table-column>
     <el-table-column
-      prop="kind"
+      prop="analysisType"
       label="分析类型"
       width="180">
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="analysisResult"
       label="运行结果"
       width="180">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="analysisReason"
       label="原因分析">
     </el-table-column>
   </el-table>
@@ -30,14 +30,8 @@
 <script>
     export default {
       name: "resultTable",
-      data() {
-        return {
-          tableData: [{
-            name: '语法正确',
-            address: '无',
-            kind: '算术表达式分析'
-          }]
-        }
+      props:{
+        tableData:[]
       },
       methods: {
         indexMethod(index) {
