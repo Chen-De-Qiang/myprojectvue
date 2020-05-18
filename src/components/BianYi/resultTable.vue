@@ -38,6 +38,11 @@
             kind: '算术表达式分析'
           }]
         }
+      },
+      methods: {
+        indexMethod(index) {
+          return index + 1;
+        }
       }
     }
 </script>

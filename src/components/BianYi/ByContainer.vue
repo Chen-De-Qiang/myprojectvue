@@ -11,7 +11,6 @@
         <el-button type="success">查看</el-button>
         <el-button type="info">帮助</el-button>
       </el-row>
-      <el-button :plain="true" @click="openNotify">成功</el-button>
     </el-header>
     <el-container style="height: 640px">
       <el-main >
@@ -19,7 +18,7 @@
       </el-main>
       <el-aside  width="665px">
         <div style=" height:320px;border: #080808 solid 1px;overflow:auto">
-          <template v-if="GrammarTable">
+          <template v-if="grammarTable">
             <GrammarTable></GrammarTable>
           </template>
         </div>
@@ -40,12 +39,12 @@
       name: "ByContainer",
       data() {
         return {
+          grammarTableData:[],
           //语法编译器
-          GrammarTable:true,
+          grammarTable:true,
           //词法编译器
           lexical:true,
-          textarea: '',
-          count: 0,
+
           Lexical: {
             contentText: ''
           }
@@ -53,18 +52,15 @@
       },
       components: {by,GrammarTable,lexical,resultTable},
       methods: {
-        load () {
-          this.count += 2
-        },
-        indexMethod(index) {
-            return index;
-        },
         handleEdit () {
           var k=this.$refs['procedureEdit'].getVal();
           console.log(JSON.stringify(k));
           this.$axios.post('/Lexical',JSON.stringify(k)).then(res => {
             if (res.data.code === 200) {
-              console.log(res.data.data);
+              //将值赋给词法分析器
+              this.GrammarTable=true;
+              this.grammarTableData=res.data.data;
+              console.log(this.grammarTableData);
               this.$notify({
                 title: '成功',
                 message: '词法分析成功',
