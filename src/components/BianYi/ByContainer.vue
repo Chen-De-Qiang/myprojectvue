@@ -4,8 +4,8 @@
       <el-row>
         <el-button type="success">文件</el-button>
         <el-button type="primary">编辑</el-button>
-        <el-button @click="handleEdit" type="success">词法分析</el-button>
-        <el-button type="info">语法分析</el-button>
+        <el-button @click="lexicalHandleEdit" type="success">词法分析</el-button>
+        <el-button @click="grammarHandleEdit2" type="info">语法分析</el-button>
         <el-button type="warning">中间代码</el-button>
         <el-button type="danger">目标代码生成</el-button>
         <el-button type="success">查看</el-button>
@@ -62,13 +62,63 @@
       },
       components: {by,GrammarTable,lexical,resultTable},
       methods: {
-        handleEdit () {
+        grammarHandleEdit2(){
+              //分析类型
+              this.lexicalTable=false;
+              this.resultTableDataJson.analysisType="赋值语句分析";
+              this.resultTableData=[];
+              //分析原因
+              this.resultTableDataJson.analysisReason = "无";
+              //分析结果
+              this.resultTableDataJson.analysisResult = "true";
+              this.resultTableData.push(this.resultTableDataJson);
+              //数据分析
+              // this.lexicalTableData=res.data.data;
+              this.$notify({
+                title: '成功',
+                message: '赋值语句成功',
+                type: 'success'
+              });
+        },
+
+        grammarHandleEdit(){
+          this.lexicalTable=false;
+          let lexicalStr=this.$refs['procedureEdit'].getVal();
+          console.log(JSON.stringify(lexicalStr));
+          this.$axios.post('/BooleanExpression',JSON.stringify(lexicalStr)).then(res => {
+            if (res.data.code === 200) {
+              console.log(res.data)
+              //分析类型
+              this.resultTableDataJson.analysisType="布尔表达式分析";
+              this.resultTableData=[];
+                //分析原因
+                this.resultTableDataJson.analysisReason = "非常nice";
+                //分析结果
+                this.resultTableDataJson.analysisResult = res.data.data+"";
+              this.resultTableData.push(this.resultTableDataJson);
+              //数据分析
+              // this.lexicalTableData=res.data.data;
+              this.$notify({
+                title: '成功',
+                message: '布尔表达式分析成功',
+                type: 'success'
+              });
+            }
+          }).catch(failResponse => {
+            this.$notify.error({
+              title: '错误',
+              message: '词法分析失败',
+              type:'danger'
+            });
+          })
+        },
+        lexicalHandleEdit () {
           let lexicalStr=this.$refs['procedureEdit'].getVal();
           console.log(JSON.stringify(lexicalStr));
           this.$axios.post('/Lexical',JSON.stringify(lexicalStr)).then(res => {
             if (res.data.code === 200) {
               //将值赋给词法分析器
-              this.GrammarTable=true;
+              this.lexicalTable=true;
               //分析类型
               this.resultTableDataJson.analysisType="语法分析";
               //分析原因
@@ -100,14 +150,14 @@
 <style scoped>
 
   .el-aside {
-    background-color: #D3DCE6;
+    background-color: white;
     color: #333;
     text-align: left;
     line-height: 20px;
   }
 
   .el-main {
-    background-color: #E9EEF3;
+    background-color: white;
     color: #333;
     text-align: center;
     line-height: 160px;
